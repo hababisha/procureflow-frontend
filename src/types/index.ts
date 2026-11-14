@@ -321,3 +321,70 @@ export interface StockMovement {
   note?: string;
   createdAt: string;
 }
+
+export interface DashboardSummaryResponse {
+  totalRequisitions: number;
+  pendingApprovals: number;
+  totalPurchaseOrders: number;
+  outstandingOrders: number;
+  totalInventoryItems: number;
+  lowStockItemsCount: number;
+  totalSpend: number;
+}
+
+export interface ExpenditureReportResponse {
+  totalSpend: number;
+  periodFrom?: string;
+  periodTo?: string;
+  byDepartment: {
+    departmentId: number;
+    departmentName: string;
+    spend: number;
+    orderCount: number;
+  }[];
+  bySupplier: {
+    supplierId: number;
+    supplierName: string;
+    spend: number;
+    orderCount: number;
+  }[];
+}
+
+export interface RequisitionReportResponse {
+  totalCount: number;
+  byStatus: Record<string, number>;
+  byPriority: Record<string, number>;
+  byDepartment: {
+    departmentId: number;
+    departmentName: string;
+    count: number;
+    estimatedTotal: number;
+  }[];
+}
+
+export interface InventoryValuationReportResponse {
+  totalItems: number;
+  totalQuantity: number;
+  totalValuation: number;
+  items: {
+    itemId: number;
+    sku: string;
+    name: string;
+    categoryName?: string;
+    quantity: number;
+    unitPrice: number;
+    totalValue: number;
+    lowStock: boolean;
+  }[];
+}
+
+export interface SupplierReportResponse {
+  totalSuppliers: number;
+  suppliers: {
+    supplierId: number;
+    supplierName: string;
+    status: string;
+    ordersCount: number;
+    totalSpend: number;
+  }[];
+}
