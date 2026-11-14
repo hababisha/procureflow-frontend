@@ -116,3 +116,63 @@ export interface SupplierPurchaseHistory {
   totalAmount: number;
   itemCount: number;
 }
+
+export interface RequisitionItem {
+  id?: number;
+  itemId: number;
+  itemSku?: string;
+  itemName?: string;
+  itemUnit?: string;
+  quantity: number;
+  estimatedUnitPrice: number;
+  subtotal?: number;
+}
+
+export interface Requisition {
+  id: number;
+  requisitionNumber: string;
+  employeeId: number;
+  employeeName: string;
+  departmentId: number;
+  departmentName: string;
+  justification: string;
+  priority: "LOW" | "MEDIUM" | "HIGH" | "URGENT";
+  requiredDate: string;
+  status:
+    | "DRAFT"
+    | "SUBMITTED"
+    | "MANAGER_APPROVAL"
+    | "FINANCE_APPROVAL"
+    | "PROCUREMENT"
+    | "ORDERED"
+    | "RECEIVED"
+    | "COMPLETED"
+    | "REJECTED";
+  version: number;
+  estimatedTotal: number;
+  items: RequisitionItem[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RequisitionRequest {
+  justification: string;
+  priority: string;
+  requiredDate: string;
+  items: {
+    itemId: number;
+    quantity: number;
+    estimatedUnitPrice: number;
+  }[];
+}
+
+export interface Approval {
+  id: number;
+  requisitionId: number;
+  stage: string;
+  decision: "APPROVED" | "REJECTED";
+  actorId: number;
+  actorName: string;
+  comment?: string;
+  createdAt: string;
+}
