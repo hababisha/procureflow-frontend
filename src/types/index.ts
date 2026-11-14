@@ -239,3 +239,85 @@ export interface PurchaseOrderRequest {
     unitPrice?: number;
   }[];
 }
+
+export interface GoodsReceiptItem {
+  id: number;
+  purchaseOrderItemId: number;
+  itemId: number;
+  itemSku: string;
+  itemName: string;
+  itemUnit: string;
+  quantityReceived: number;
+}
+
+export interface GoodsReceipt {
+  id: number;
+  receiptNumber: string;
+  purchaseOrderId: number;
+  poNumber: string;
+  idempotencyKey?: string;
+  deliveryNoteNumber: string;
+  receivedById: number;
+  receivedByName: string;
+  receivedAt: string;
+  verified: boolean;
+  notes?: string;
+  items: GoodsReceiptItem[];
+}
+
+export interface GoodsReceiptRequest {
+  deliveryNoteNumber: string;
+  notes?: string;
+  verified?: boolean;
+  items: {
+    purchaseOrderItemId: number;
+    quantityReceived: number;
+  }[];
+}
+
+export interface InventoryItem {
+  id: number;
+  itemId: number;
+  itemSku: string;
+  itemName: string;
+  unit: string;
+  unitPrice: number;
+  quantity: number;
+  reorderLevel: number;
+  lowStock: boolean;
+  location?: string;
+  updatedAt: string;
+}
+
+export interface StockIssueRequest {
+  itemId: number;
+  quantity: number;
+  departmentId: number;
+  recipientName: string;
+  reason: string;
+}
+
+export interface StockAdjustmentRequest {
+  itemId: number;
+  adjustedQuantity: number;
+  reason: string;
+}
+
+export interface StockMovement {
+  id: number;
+  itemId: number;
+  itemSku: string;
+  itemName: string;
+  movementType: "RECEIPT" | "ISSUE" | "ADJUSTMENT";
+  quantity: number;
+  referenceType?: string;
+  referenceId?: number;
+  departmentId?: number;
+  departmentName?: string;
+  recipientId?: number;
+  recipientName?: string;
+  performedById: number;
+  performedByName: string;
+  note?: string;
+  createdAt: string;
+}
