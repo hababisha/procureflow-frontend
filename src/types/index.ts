@@ -176,3 +176,66 @@ export interface Approval {
   comment?: string;
   createdAt: string;
 }
+
+export interface Quotation {
+  id: number;
+  requisitionId: number;
+  supplierId: number;
+  supplierName: string;
+  totalAmount: number;
+  validUntil?: string;
+  selected: boolean;
+  notes?: string;
+  createdByUserId: number;
+  createdByName: string;
+  createdAt: string;
+}
+
+export interface QuotationRequest {
+  supplierId: number;
+  totalAmount: number;
+  validUntil?: string;
+  notes?: string;
+}
+
+export interface PurchaseOrderItem {
+  id: number;
+  itemId: number;
+  itemSku: string;
+  itemName: string;
+  itemUnit: string;
+  quantity: number;
+  receivedQuantity: number;
+  unitPrice: number;
+  subtotal: number;
+}
+
+export interface PurchaseOrder {
+  id: number;
+  poNumber: string;
+  requisitionId: number;
+  requisitionNumber: string;
+  supplierId: number;
+  supplierName: string;
+  quotationId?: number;
+  status: "ORDERED" | "RECEIVED" | "COMPLETED" | "CANCELLED";
+  expectedDeliveryDate?: string;
+  totalAmount: number;
+  createdById: number;
+  createdByName: string;
+  items: PurchaseOrderItem[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PurchaseOrderRequest {
+  requisitionId: number;
+  supplierId?: number;
+  quotationId?: number;
+  expectedDeliveryDate?: string;
+  items?: {
+    itemId: number;
+    quantity: number;
+    unitPrice?: number;
+  }[];
+}
