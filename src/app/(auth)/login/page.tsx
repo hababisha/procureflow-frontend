@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuthStore } from "@/store/authStore";
+import { queryClient } from "@/lib/queryClient";
 import { Lock, Mail, ShieldAlert, ArrowRight, CheckCircle2, Building } from "lucide-react";
 
 const DEMO_ACCOUNTS = [
@@ -30,12 +31,14 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
+      queryClient.clear();
       const response = await axios.post("/api/auth/login", {
         email,
         password,
       });
 
-      setUser(response.data);
+      const authUser = response.data?.user ?? response.data;
+      setUser(authUser);
       router.push("/");
       router.refresh();
     } catch (err: unknown) {

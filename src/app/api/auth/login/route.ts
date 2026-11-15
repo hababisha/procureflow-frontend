@@ -19,9 +19,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(data, { status: response.status });
     }
 
-    const { token, ...userData } = data;
+    const { token, user } = data;
 
-    const res = NextResponse.json(userData, { status: 200 });
+    const res = NextResponse.json(user ?? data, { status: 200 });
 
     res.cookies.set("procureflow_token", token, {
       httpOnly: true,

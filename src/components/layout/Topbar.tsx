@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Menu, LogOut, User as UserIcon } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
+import { queryClient } from "@/lib/queryClient";
 import { formatRoleName, getRoleBadgeColor } from "@/lib/permissions";
 import { cn } from "@/lib/utils";
 
@@ -19,10 +20,12 @@ export function Topbar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
     try {
       await axios.post("/api/auth/logout");
       clear();
+      queryClient.clear();
       router.push("/login");
       router.refresh();
     } catch {
       clear();
+      queryClient.clear();
       router.push("/login");
     } finally {
       setLoggingOut(false);
